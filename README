@@ -1,0 +1,90 @@
+NAME
+    POE::Declare::HTTP::Server - A simple HTTP server based on POE::Declare
+
+SYNOPSIS
+        # Create the web server
+        my $server = POE::Declare::HTTP::Server->new(
+            Hostname => '127.0.0.1',
+            Port     => '8010',
+            Handler  => sub {
+                my $request  = shift;
+                my $response = shift;
+        
+            # Your webby stuff here...
+        
+            return;
+            },
+        );
+        
+    # Control with methods
+        $server->start;
+        $server->stop;
+
+DESCRIPTION
+    This module allows creation of a simple HTTP server based on
+    POE::Declare.
+
+METHODS
+  new
+        my $server = POE::Declare::HTTP::Server->new(
+            Hostname => '127.0.0.1',
+            Port     => '8010',
+            Handler  => \&content,
+        );
+
+    The "new" constructor sets up a reusable HTTP server that can be enabled
+    and disabled repeatedly as needed.
+
+    It takes three required parameters parameters. "Hostname", "Port" and
+    "Handler".
+
+    The "Handler" parameter should be a "CODE" reference that will be passed
+    a HTTP::Request object and a HTTP::Response object. Your code should
+    examine the request object, and fill the provided response object.
+
+  Hostname
+    The "Hostname" accessor returns the server to bind to, as originally
+    provided to the constructor.
+
+  Port
+    The "Port" accessor returns the port number to bind to, as originally
+    provided to the constructor.
+
+  Handler
+    The "Handler" accessor returns the "CODE" reference that requests will
+    be passed to, as provided to the constructor.
+
+  start
+    The "start" method enables the web server. If the server is already
+    running, this method will shortcut and do nothing.
+
+    If called before POE has been started, the web server will start
+    immediately once POE is running.
+
+  stop
+    The "stop" method disables the web server. If the server is not running,
+    this method will shortcut and do nothing.
+
+SUPPORT
+    Bugs should be always be reported via the CPAN bug tracker at
+
+    <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=POE-Declare-HTTP-Server>
+
+    For other issues, or commercial enhancement or support, contact the
+    author.
+
+AUTHORS
+    Adam Kennedy <adamk@cpan.org>
+
+SEE ALSO
+    POE, <http://ali.as/>
+
+COPYRIGHT
+    Copyright 2006 - 2011 Adam Kennedy.
+
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+    The full text of the license can be found in the LICENSE file included
+    with this module.
+
