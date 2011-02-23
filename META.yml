@@ -22,16 +22,14 @@ no_index:
     - t
     - xt
 requires:
-  HTTP::Headers: 5.835
   HTTP::Request: 5.827
-  HTTP::Response: 5.836
+  HTTP::Response: 5.830
   POE: 1.299
   POE::Declare: 0.50
-  POE::Filter::HTTPD: 1.299
   Params::Util: 1.00
   perl: 5.8.0
 resources:
   ChangeLog: http://fisheye2.atlassian.com/changelog/cpan/trunk/POE-Declare-HTTP-Server
   license: http://dev.perl.org/licenses/
   repository: http://svn.ali.as/cpan/trunk/POE-Declare-HTTP-Server
-version: 0.01
+version: 0.03

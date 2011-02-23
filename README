@@ -7,10 +7,15 @@ SYNOPSIS
             Hostname => '127.0.0.1',
             Port     => '8010',
             Handler  => sub {
-                my $request  = shift;
                 my $response = shift;
         
-            # Your webby stuff here...
+            # The request is not passed to you but is available if needed
+                my $request = $response->request;
+        
+            # Webby content generation stuff here
+                $response->code( 200 );
+                $response->header( 'Content-Type' => 'text/plain' );
+                $response->content( "Hello World!" );
         
             return;
             },
@@ -21,15 +26,22 @@ SYNOPSIS
         $server->stop;
 
 DESCRIPTION
-    This module allows creation of a simple HTTP server based on
-    POE::Declare.
+    This module provides a simple HTTP server based on POE::Declare.
+
+    The implemenetation is intentionally minimalist, making this module an
+    ideal choice for creating specialised web servers embedded into larger
+    applications.
 
 METHODS
   new
         my $server = POE::Declare::HTTP::Server->new(
-            Hostname => '127.0.0.1',
-            Port     => '8010',
-            Handler  => \&content,
+            Hostname      => '127.0.0.1',
+            Port          => '8010',
+            Handler       => \&content,
+
+            StartupEvent  => \&startup_done,
+            StartupError  => \&startup_failed,
+            ShutdownEvent => \&shutdown_done,
         );
 
     The "new" constructor sets up a reusable HTTP server that can be enabled
@@ -41,6 +53,22 @@ METHODS
     The "Handler" parameter should be a "CODE" reference that will be passed
     a HTTP::Request object and a HTTP::Response object. Your code should
     examine the request object, and fill the provided response object.
+
+    The server supports three messages you can register callbacks for.
+
+    The "StartupEvent" message fires after the server socket has been bound
+    and is available for clients to make requests, and before any
+    connections have been made from clients.
+
+    The "StartupError" message fires if the server fails to bind to the
+    port, or has some other error during the socket setup process.
+
+    The "ShutdownEvent" message fires on the completion of a controlled
+    shutdown.
+
+    There is currently no "ShutdownError" event for unexpected server
+    termination, as this should not occur. An error of this type may,
+    however, be added later.
 
   Hostname
     The "Hostname" accessor returns the server to bind to, as originally
