@@ -3,10 +3,11 @@ NAME
 
 SYNOPSIS
         # Create the web server
-        my $server = POE::Declare::HTTP::Server->new(
+        my $http = POE::Declare::HTTP::Server->new(
             Hostname => '127.0.0.1',
             Port     => '8010',
             Handler  => sub {
+                my $server   = shift;
                 my $response = shift;
         
             # The request is not passed to you but is available if needed
@@ -22,14 +23,14 @@ SYNOPSIS
         );
         
     # Control with methods
-        $server->start;
-        $server->stop;
+        $http->start;
+        $http->stop;
 
 DESCRIPTION
     This module provides a simple HTTP server based on POE::Declare.
 
     The implemenetation is intentionally minimalist, making this module an
-    ideal choice for creating specialised web servers embedded into larger
+    ideal choice for creating specialised web servers embedded in larger
     applications.
 
 METHODS
@@ -51,8 +52,10 @@ METHODS
     "Handler".
 
     The "Handler" parameter should be a "CODE" reference that will be passed
-    a HTTP::Request object and a HTTP::Response object. Your code should
-    examine the request object, and fill the provided response object.
+    the server object and a HTTP::Response object. Your code should fill the
+    provided response object, which will be sent to the client when the
+    function ends. If your content will change based on the request, you can
+    obtain the request from the "request" in HTTP::Response method.
 
     The server supports three messages you can register callbacks for.
 
