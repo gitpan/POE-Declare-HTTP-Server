@@ -6,6 +6,7 @@ build_requires:
   ExtUtils::MakeMaker: 6.42
   Test::More: 0.42
   Test::NoWarnings: 1.00
+  Test::POE::Stopping: 1.07
 configure_requires:
   ExtUtils::MakeMaker: 6.42
 distribution_type: module
@@ -24,7 +25,7 @@ no_index:
 requires:
   HTTP::Request: 5.827
   HTTP::Response: 5.830
-  POE: 1.299
+  POE: 1.293
   POE::Declare: 0.50
   Params::Util: 1.00
   perl: 5.8.0
@@ -32,4 +33,4 @@ resources:
   ChangeLog: http://fisheye2.atlassian.com/changelog/cpan/trunk/POE-Declare-HTTP-Server
   license: http://dev.perl.org/licenses/
   repository: http://svn.ali.as/cpan/trunk/POE-Declare-HTTP-Server
-version: 0.04
+version: 0.05
